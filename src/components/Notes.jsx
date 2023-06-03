@@ -1,19 +1,13 @@
 import React from "react";
 import { FaEdit, FaTrash } from "react-icons/fa";
-
 function Notes(props) {
-  
   const {notes,deleteNote}  = props;
 
-
- 
     return (
-
-    <div className="  flex flex-wrap space-y-10 md:space-y-0 justify-center rounded-lg w-full  h-auto my-5  ">
+    <div className="  flex flex-wrap space-y-2 md:space-y-3 justify-center rounded-lg w-full  h-auto  ">
       {notes.map((note)=>{
         return(
-          <div key={note.id}  className= 'w-full  md:w-1/4 ml-5 bg-yellow-800 p-5  text-gray-200 rounded-lg '>
-                  <div className="">
+          <div key={note.id}  className= 'p-10 flex justify-center  m-2  md:w-1/4  bg-yellow-800 p-5  text-gray-200 rounded-lg bg-red-900  '>
                     <div className="text-black font-light my-2 text-gray-200 ">
                        <h1 className="text-3xl  pl-2 font-bold" >{note.title}</h1>
                         <p className="my-4">{note.content}</p>
@@ -26,7 +20,7 @@ function Notes(props) {
                         <button className="" ><FaEdit/></button>
         
                   </div>
-                  </div>
+                  
  
          </div>
         )

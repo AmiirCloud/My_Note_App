@@ -23,6 +23,7 @@ function App() {
     axios.get('http://localhost:9001/notes')
     .then((resp)=>{
       setNotes(resp.data)
+      console.log(resp)
     }).catch((er)=>{
       console.log(er)
     })

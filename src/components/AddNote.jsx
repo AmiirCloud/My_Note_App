@@ -53,10 +53,7 @@ const validationSchema  = Yup.object({
      
    
     
-     
-     <button  className='w-full bg-green-900 h-10 text-white ' onClick={()=>{
-      setFieldValue("title","")
-     }} type="button"> cleart Text</button>
+  
 
     <button  className='w-full bg-green-900 h-10 text-white ' type="submit"> submit</button>
 

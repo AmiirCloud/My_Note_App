@@ -1,30 +1,12 @@
-import React, { useEffect, useState } from "react";
-// Import all your components here
-// Soo Jiido wixii components ah ood u baahantahay
 
-import axios from "axios";
+import AddNote from "./components/AddNote";
+import Notes from "./components/Notes";
+import EditNote  from './components/EditNote' 
+import {Routes,Route,useLocation } from "react-router-dom";
+import { deleteNote } from "./Store/api/NotesSlice";
 
 function App() {
-  const [notes, setNotes] = useState([]);
-
-  useEffect(() => {
-    // get all notes from localhost:9000/notes using axios
-    // Dhamaan wixii notes ah kasoo jiido localhost:9000/notes adigoo axios isticmaalaayo
-  }, []);
-
-  const createNote = (noteData) => {
-    // Make API call to create a note (POST request to localhost:9000/create_note)
-    // Halkaas ka samee note cusub adigoo POST request isticmaalaayo localhost:9000/create_note
-  };
-
-  const deleteNote = (id) => {
-    // Make API call to delete a note (DELETE request to localhost:9000/delete_note/:id)
-    // Halkaas ka tirtir note adigoo DELETE request isticmaalaayo localhost:9000/delete_note/:id
-  };
-
-  // STRETCH GOAL: Implement edit functionality
-  // STRETCH GOAL: Isku day inaa edit ku sameyso notes-ka
-
+  const location   = useLocation()
   return (
     <div className="bg-blue-600 min-h-screen flex">
       <div className="w-full">
@@ -32,6 +14,16 @@ function App() {
           <h3 className="text-3xl text-white mb-5 mt-5">My Notes</h3>
           { /* Add here all the components you need */ }
           { /* Halkaas ku dar components-ka aad u baahan tahay */ }
+        {  location.pathname === "/"
+        ?<AddNote/>:
+        <Routes>
+          <Route path='edit_Note/:id'   element={<EditNote/>}/>
+          <Route path="delete_note/:id" ></Route>
+        </Routes>
+        }
+        
+          
+          <Notes/>
         </div>
       </div>
     </div>

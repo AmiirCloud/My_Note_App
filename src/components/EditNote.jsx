@@ -2,38 +2,62 @@ import React from 'react';
 import *  as Yup from 'yup'
 // Import Formik and Yup
 import { Formik, Form, Field , ErrorMessage} from 'formik';
-
-
+import {useState}  from 'react'
 import { useDispatch } from 'react-redux';
-import { addNotes } from '../Store/api/NotesSlice';
+import {  editNote, fetchNOtes } from '../Store/api/NotesSlice';
 import {useNavigate , useParams} from 'react-router-dom'
-const AddNote = () => {
+import { useEffect } from 'react';
+import { useSelector } from 'react-redux';
+
+const EditNote = () => {
+    
 const dispatch  = useDispatch()
-const  naviage =  useNavigate()
-const initialValues = {
-  title :"",
-  content:""
-}
+const  navigate =  useNavigate();
+const [currentValue ,setCurrentValue] =  useState({})
+const notes   = useSelector((state)=>state.note.notes)
+const params   = useParams();
 // a funciton that clear the textBox vlues when submited the form
+useEffect(()=>{
+    dispatch(fetchNOtes())
+},[dispatch])
 
-const  onSubmit =(values,{resetForm})=> {
-  dispatch(addNotes(values))
-  
-  resetForm();
+useEffect(()=>{
+    if(notes.length) {
+          const note   = notes.find((note)=>note.id === Number(params.id))
+          setCurrentValue(note)
+    }
+},[notes,params.id])
 
-  
-}
+const initialValues = {
+    title :currentValue.title,
+    content:currentValue.content
+  }
 const validationSchema  = Yup.object({
   title:Yup.string().required("Title is Required"),
   content:Yup.string().required("Body is Required")
 })
+
+ 
+  const handleSubmit = (values, { resetForm }) => {
+  dispatch(editNote({
+    updateNoteId:values,
+
+    id:Number(params.id),
+    
+  })).then(()=>{
+    navigate("/")
+    window.location.reload();
+  })
+  resetForm();
+  };
   return (
     <div className='bg-gray-100 h-100  w-full md:w-1/2  xs:w-1/5'>
       <div className=' rounded-lg shadow '>
       <Formik 
-     initialValues =  {initialValues}
-     validationSchema = {validationSchema}
-     onSubmit = {onSubmit}
+      enableReinitialize
+     initialValues={initialValues}
+     validationSchema={validationSchema}
+     onSubmit={handleSubmit}
       >
         <Form className='bg-gray-200 flex p-5 flex-col space-y-5 my-10  '>
      <Field className='h-10 text-left-10  w-full  rounded-lg' id="title-id"  type="text" placeholder="Title" name ="title" />
@@ -63,4 +87,4 @@ const validationSchema  = Yup.object({
   );
 };
 
-export default AddNote;
+export default EditNote;
